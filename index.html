@@ -8,19 +8,25 @@
     html, body { margin:0; padding:0; height:100%; background:#000; overflow:hidden; }
     .hint { position:fixed; left:0; right:0; bottom:10px; color:#fff; font:14px/1.3 system-ui, -apple-system, Segoe UI, Roboto, Arial; text-align:center; opacity:.9; }
   </style>
+  <!-- A-Frame -->
   <script src="https://cdn.jsdelivr.net/npm/aframe@1.4.0/dist/aframe.min.js"></script>
+  <!-- MindAR core + A-Frame интеграция -->
   <script src="https://unpkg.com/mind-ar@1.1.0/dist/mindar-face.prod.js"></script>
+  <script src="https://unpkg.com/mind-ar@1.1.0/dist/mindar-face-aframe.prod.js"></script>
 </head>
 <body>
   <div class="hint">Разреши доступ к камере. Держи лицо в кадре — костюм подвяжется к голове.</div>
+
+  <!-- Важно: компонент mindar-face активирует видеопоток -->
   <a-scene mindar-face="autoStart: true; uiLoading: no; uiScanning: no; uiError: yes;"
            embedded color-space="sRGB" xr-mode-ui="enabled: false"
            renderer="colorManagement: true, physicallyCorrectLights: true">
+
     <a-assets>
       <img id="mask" src="./mask.png" crossorigin="anonymous" />
     </a-assets>
 
-    <!-- anchorIndex 0 — центр лица (нос). Масштаб и вертикальный сдвиг подогнаны под полный костюм. -->
+    <!-- Привязка к центру лица (нос). Большая плоскость со сдвигом вниз для «полного костюма» -->
     <a-entity mindar-face-target="anchorIndex: 0;">
       <a-plane src="#mask"
                position="0 -0.68 0.02"
